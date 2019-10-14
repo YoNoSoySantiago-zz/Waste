@@ -1,5 +1,5 @@
 package model;
-public class Recyclable{
+public class Recyclable extends Residue{
 	//Attributes
 	private String type;
 	private String descriptionHome;
@@ -10,10 +10,12 @@ public class Recyclable{
 	public final String PLASTIC="plastico";
 
 	//Mothods
-	public Recyclable(String type, String descriptionHome,String descriptionIndustry){
+	public Recyclable(String type, String descriptionHome,String descriptionIndustry,String identifier, String name, String origin, String color, int timeToDescompose){
+		super(identifier,name,origin,color,timeToDescompose);
 		this.type = type;
 		this.descriptionHome = descriptionHome;
 		this.descriptionIndustry = descriptionIndustry;
+
 	}
 	public String getType(){
 		return this.type;

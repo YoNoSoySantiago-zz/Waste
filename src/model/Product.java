@@ -13,5 +13,17 @@ public class Product{
 		this.name = name;
 		this.description = description;
 	} 
+	public String getIdentifier(){
+		return this.identifier;
+	}
+	public String getName(){
+		return this.name;
+	}
+	public String getDescription(){
+		return this.description;
+	}
+	public ArrayList getResidues(){
+		return this.residues;
+	}
 
 }

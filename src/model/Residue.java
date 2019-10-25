@@ -44,6 +44,7 @@ public class Residue{
 	public String tipoClase(){	
 		return this.getClass().getName();
 	}
-	
+	public String toString(){
+	}
 
 }

@@ -121,20 +121,49 @@ public class Waste{
 		return result;
 		
 	}
-	public boolean calculateBioUsable(int timeToDescompose, boolean cosposting){
-		boolean result = false;
-		if(timeToDescompose < 1){
-			if(cosposting == true){
+	public boolean calculateBioUsable(String name){
+		int aux= -1,timeToDescompose;
+		boolean composting, result = false;
+
+		for(int i=0; i<residues.size();i++){
+			if(residues.get(i).getName().equalsIgnoreCase(name)){
+				aux = i;
+				break;
+			}
+		}		
+		
+		if(aux != -1){
+			if(residues.get(aux) instanceof Biodegradable){
+			timeToDescompose = residues.get(aux).getTimeToDescompose();
+			composting = residues.get(aux).getComposting();
+				if(timeToDescompose < 1){
+					if(cosposting == true){
 				result = true;
+					}
+				}
 			}
 		}
+		
 		return result;
 	}
-	public boolean calculateRecycleUsable(String description){
+	public boolean calculateRecycleUsable(String name){
 		boolean result = false;
-		if(description != ""){
-			result = true;
+		String description1= "",description2="";
+		for(int i=0; i<residues.size();i++){
+			if(residues.get(i).getName().equalsIgnoreCase(name)){
+				aux = i;
+				break;
+			}
 		}
+		if(aux != -1){
+			description1 = residues.get(aux).getDescriptionHome();
+			description2 = residues.get(aux).getDescriptionIndustry();
+			if(description1 != "" && description2 != ""){
+			result = true;
+			}
+
+		}
+		
 		return result;
 
 	}

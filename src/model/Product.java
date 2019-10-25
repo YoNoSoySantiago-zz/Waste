@@ -8,10 +8,11 @@ public class Product{
 	private String description;
 
 	//Methods
-	public Product(String identifier, String name, String description){
+	public Product(String identifier, String name, String description, Residue residue){
 		this.identifier = identifier;
 		this.name = name;
 		this.description = description;
+		residues.add(residue);
 	} 
 	public String getIdentifier(){
 		return this.identifier;
@@ -22,7 +23,7 @@ public class Product{
 	public String getDescription(){
 		return this.description;
 	}
-	public ArrayList getResidues(){
+	public ArrayList<Residue> getResidues(){
 		return this.residues;
 	}
 

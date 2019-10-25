@@ -10,8 +10,8 @@ public class Recyclable extends Residue{
 	public final String PLASTIC="plastico";
 
 	//Mothods
-	public Recyclable(String type, String descriptionHome,String descriptionIndustry,String identifier, String name, String origin, String color, int timeToDescompose){
-		super(identifier,name,origin,color,timeToDescompose);
+	public Recyclable(String type, String descriptionHome,String descriptionIndustry,String identifier, String name, String origin, String color, int timeToDescompose,Product productToProduces){
+		super(identifier,name,origin,color,timeToDescompose,productToProduces);
 		this.type = type;
 		this.descriptionHome = descriptionHome;
 		this.descriptionIndustry = descriptionIndustry;

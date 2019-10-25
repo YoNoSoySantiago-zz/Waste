@@ -4,8 +4,8 @@ public class Inert extends Residue{
 	private String advice;
 
 	//Methods
-	public Inert(String advice,String identifier, String name, String origin, String color, int timeToDescompose){
-		super(identifier,name,origin,color,timeToDescompose);
+	public Inert(String advice,String identifier, String name, String origin, String color, int timeToDescompose,Product productToProduces){
+		super(identifier,name,origin,color,timeToDescompose,productToProduces);
 		this.advice = advice;
 
 	}

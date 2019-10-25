@@ -1,5 +1,4 @@
 package model;
-import java.util.ArrayList;
 public class Residue{
 	//Attributes;
 	private String identifier;
@@ -7,7 +6,7 @@ public class Residue{
 	private String origin;
 	private String color;
 	private int timeToDescompose;
-	private ArrayList<Product> productProduces = new ArrayList<Product>();
+	private Product productToProduce;
 	public final String INDUSTRUAL="industrial";
 	public final String DOMICILIARY="domiciliario";
 	public final String MUNICIPAL = "municipal";
@@ -15,19 +14,20 @@ public class Residue{
 	public final String HOSPITAL = "hospitalario";
 
 	//Methods
-	public Residue(String identifier, String name, String origin, String color, int timeToDescompose){
+	public Residue(String identifier, String name, String origin, String color, int timeToDescompose, Product productToProduce){
 		this.identifier = identifier;
 		this.name = name;
 		this.origin = origin;
 		this.color = color;
 		this.timeToDescompose = timeToDescompose;
+		this.productToProduce = productToProduce;
 
 	}
 	public String getIdentifier(){
-		return this.name;
+		return this.identifier;
 	}
 	public String getName(){
-		return this.identifier;
+		return this.name;
 	}
 	public String getOrigin(){
 		return this.origin;
@@ -38,8 +38,12 @@ public class Residue{
 	public int getTimeToDescompose(){
 		return this.timeToDescompose;
 	}
-	public ArrayList getProductProduces(){
-		return this.productProduces;
+	public Product getProductToProduce(){
+		return this.productToProduce;
 	}
+	public String tipoClase(){	
+		return this.getClass().getName();
+	}
+	
 
 }

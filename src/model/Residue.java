@@ -44,7 +44,9 @@ public class Residue{
 	public String tipoClase(){	
 		return this.getClass().getName();
 	}
-	public String toString(){
+	
+	public void setProduct(Product product){
+		this.productToProduce = product;
 	}
 
 }

@@ -123,6 +123,7 @@ public class Waste{
 	}
 	public boolean calculateBioUsable(String name){
 		int aux= -1,timeToDescompose;
+		Biodegradable biodegradable;
 		boolean composting, result = false;
 
 		for(int i=0; i<residues.size();i++){
@@ -135,9 +136,10 @@ public class Waste{
 		if(aux != -1){
 			if(residues.get(aux) instanceof Biodegradable){
 			timeToDescompose = residues.get(aux).getTimeToDescompose();
-			composting = residues.get(aux).getComposting();
+			biodegradable = (Biodegradable) residues.get(aux);
+			composting = biodegradable.getComposting();
 				if(timeToDescompose < 1){
-					if(cosposting == true){
+					if(composting == true){
 				result = true;
 					}
 				}
@@ -147,7 +149,9 @@ public class Waste{
 		return result;
 	}
 	public boolean calculateRecycleUsable(String name){
+		Recyclable recycable;
 		boolean result = false;
+		int aux =-1;
 		String description1= "",description2="";
 		for(int i=0; i<residues.size();i++){
 			if(residues.get(i).getName().equalsIgnoreCase(name)){
@@ -156,8 +160,9 @@ public class Waste{
 			}
 		}
 		if(aux != -1){
-			description1 = residues.get(aux).getDescriptionHome();
-			description2 = residues.get(aux).getDescriptionIndustry();
+			recycable = (Recyclable) residues.get(aux);
+			description1 = recycable.getDescriptionHome();
+			description2 = recycable.getDescriptionIndustry();
 			if(description1 != "" && description2 != ""){
 			result = true;
 			}
@@ -264,6 +269,16 @@ public class Waste{
 		    	}
 		    }
 		    return result;	
+    }
+    public Product addProductExist(String name){
+    	Product result = null;
+    	for(int i = 0; i < products.size();i++){
+    		if(products.get(i).getName().equalsIgnoreCase(name)){
+    			result =  products.get(i);
+    			break;
+    		}
+    	}
+    	return result;
     }
 
 

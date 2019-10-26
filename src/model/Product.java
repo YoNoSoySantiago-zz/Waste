@@ -26,5 +26,8 @@ public class Product{
 	public ArrayList<Residue> getResidues(){
 		return this.residues;
 	}
+	public void setResidue(Residue residue){
+		residues.add(residue);
+	}
 
 }

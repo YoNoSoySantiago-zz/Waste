@@ -1,39 +1,107 @@
 package ui;
 import model.*;
 import java.util.Scanner;
+import java.util.ArrayList;
  public class Main{
  	private Waste waste = new Waste();
  	private Scanner s = new Scanner(System.in);
  	private	Scanner n = new Scanner(System.in);
+ 	private boolean finish = false;
  	public static void main(String[] args){
  		Main main = new Main();
- 		main.showMenu();
- 		main.start();
-
-
+ 		do{
+ 			main.showMenu();
+ 			main.start();
+		}while(main.finish == false);
+ 		
+ 
  	}
  	public void showMenu(){
- 		System.out.println(
+ 		System.out.println("\n"+
+ 		"////////////////////////////////////////////////////////////////////////////\n"+
  		"1. agregar Nuevo residuo \n"+
  		"2. agregar Nuevo producto \n"+
- 		"3. Mostrar reporte de lso productos registrados \n"+
+ 		"3. Mostrar reporte de los residuos registrados \n"+
  		"4. Mostrar informacion de un residuo \n"+
  		"5. Mostrar lista de productos registrados \n"+
  		"6. Calcular efecto nocivo de un residuo \n"+
  		"7. Determinar si un residuo biodegradable o reciclable es aprovechable \n"+
- 		"8. Listar residuos de un producto, en orden nocivo");	
+ 		"8. Listar residuos de un producto, en orden nocivo\n"+
+ 		"0. Salir");	
  	}
  	public void start(){
- 		int seleccion;
+ 		double nocive;
+ 		Product product;
+ 		Residue residue;
+ 		String name,identifier;
+ 		boolean usable;
+ 		int seleccion,seleccion2;
  		seleccion = n.nextInt();
  		switch (seleccion){
  			case 1:
+ 			addResidue(true);
+ 			break;
+ 		
+ 			case 2:
+ 			addProduct(true);
+ 			break;
+
+ 			case 3:
+ 			waste.generateReport();
+ 			break;
+
+ 			case 4:
+ 			System.out.println("1. nombre\n "+"2. identificador");
+ 			seleccion2 = n.nextInt();
+ 			if(seleccion2 == 1){
+ 				System.out.println("indique el nombre del residuo que desea buscar: ");
+ 				name = s.nextLine();
+ 				waste.showInfoName(name);
+ 			}else if(seleccion2 == 2){
+ 				System.out.println("indique el identificador del residuo que desea buscar: ");
+ 				identifier = s.nextLine();
+ 				waste.showInfoIdentifier(identifier);
+ 			}
+ 			break;
+
+ 			case 5:
+ 			waste.showListProducts();
+ 			break;
+
+ 			case 6:
+ 			System.out.println("indique el nombre del residuo que desea Calcular: ");
+ 			name = s.nextLine();
+ 			nocive = waste.calculateEfectPlanet(name);
+ 			System.out.println("el efecto Nocivo es: "+ nocive);
+ 			break;
+
+ 			case 7:
+ 			System.out.println("indique el nombre del residuo que sea Calcular: ");
+ 			name = s.nextLine();
+ 			usable = waste.calculateResidueUsable(name);
+ 			if(usable == true){
+ 				System.out.println("El residuo es aprovechable");
+ 			}else{
+ 				System.out.println("El residuo no es aprovechable");
+ 			}
+ 			break;
+
+ 			case 8:
+ 			System.out.println("indique el nombre o el identificador del Product que desea buscar: ");
+ 			name = s.nextLine();
+ 			waste.showListResidueNosive(name);
+ 			break;
+
+ 			case 0:
+ 			finish = true;
  			
  		}
  	}
- 	public void addResidue(){
+ 	public void addResidue(boolean conditional){
+ 		ArrayList<Residue> residues = new ArrayList<Residue>();
+ 		Residue residue;
  		int seleccion,timeToDescompose,seleccion2;
- 		String teclado,identifier="",name="",origin="",color="",name2 ="",type ="",descriptionHome="",descriptionIndustry="";
+ 		String teclado,identifier="",name="",origin="",color="",name2 ="",type ="",descriptionHome="",descriptionIndustry="",advice = "";
  		Product product = null;
  		boolean continue1 = false,composting = false;
  		System.out.println("porfavor indique el tipo de residuo que desea agregar \n"+
@@ -45,18 +113,18 @@ import java.util.Scanner;
  			System.out.println("indique un identificador para este residuo: ");
  			identifier = s.nextLine();
  			continue1 = waste.searchIdentifiers(identifier);
- 			if(continue1 == false){
+ 			if(continue1 == true){
  				System.out.println("este identificador esta en uso");
  			}
- 			}while(continue1 == false);
+ 			}while(continue1 == true);
  		do{
  			System.out.println("indique un nombre: ");
  			name = s.nextLine();
  			continue1 = waste.searchNames(name);
- 			if(continue1 == false){
+ 			if(continue1 == true){
  				System.out.println("este nombre esta en uso");
  			}
- 		}while(continue1 == false);	
+ 		}while(continue1 == true);	
  		do{
  		System.out.println("indique de donde proviene: \n"+
  			"1. industrial\n"+
@@ -88,9 +156,43 @@ import java.util.Scanner;
  		color = s.nextLine();
  		System.out.println("indique el tiempo de descompocicion en dias: ");
  		timeToDescompose = n.nextInt();
+ 		if(conditional == true){
+ 			do{
+ 				continue1 = true;
+ 				System.out.println("indique el producto que la produce:\n "+
+ 				"0. Mostrar los existente\n"+
+ 				"1. Añadir uno existente\n"+
+ 				"2. Añadir uno nuevo");
+ 				seleccion2 = n.nextInt();
+ 				switch (seleccion2){
+ 					case 0:
+ 					waste.showListProducts();
+ 					break;
+ 					case 1:
+ 					System.out.println("indique el nombre del producto que desea agregar");
+ 					name2 = s.nextLine();
+ 					product = waste.addProductExist(name2);
+ 					if(product == null){
+ 						continue1 = true;
+ 					}else{
+ 						continue1 = false;
+ 					}
+ 					
+ 					break;
+ 					case 2:
+ 					addProduct(false);
+ 					product = waste.getLastProduct();
+ 					continue1 = false;
+ 					break;
+ 				}
+
+ 			}while(continue1 == true);
 
  		
-
+ 		}else{
+ 			product = waste.getLastProduct();
+ 		}
+ 		//String identifier, String name, String description, ArrayList<Residue> residues
  		switch (seleccion){
  			//boolean composting
  			case 1:
@@ -103,6 +205,8 @@ import java.util.Scanner;
  				composting = false;
  			}
  		}while(seleccion2 != 1 && seleccion2 != 2);
+ 		//boolean composting,String identifier, String name, String origin, String color, int timeToDescompose,Product productToProduce
+ 			waste.addResidue(composting,identifier,name,origin,color,timeToDescompose,product);
  			break;
 
  			//String type;String descriptionHome; String descriptionIndustry;
@@ -131,34 +235,65 @@ import java.util.Scanner;
  				}
  			}while(type == "");
  			do{
- 				System.out.println("");
- 			}while(descriptionHome == "" || descriptionIndustry == "");
+ 				System.out.println("indique una descripción de cuál es la manera más adecuada de realizar la disposición de estos elementos para los hogares: ");
+ 				descriptionHome = s.nextLine();
 
+ 				System.out.println("indique una descripción de cuál es la manera más adecuada de realizar la disposición de estos elementos para la industria: ");
+ 				descriptionIndustry = s.nextLine();
+ 			}while(descriptionHome == "" || descriptionIndustry == "");
+ 			waste.addResidue(type,descriptionHome,descriptionIndustry,identifier,name,origin,color,timeToDescompose,product);
+ 			break;
  			//String advice
+ 			case 3:
+ 			do{
+ 				System.out.println("indique consejos para reducir su uso");
+ 				advice = s.nextLine();
+ 			}while(advice == "");
+ 			waste.addResidue(advice,identifier,name,origin,color,timeToDescompose,product);
+ 			break;
 
 
  		}
- 		do{
- 			System.out.println("indique el producto que la produce:\n "+
- 			"0. Mostrar los existente\n"+
- 			"1. Añadir uno existente\n"+
- 			"2. Añadir uno nuevo");
- 			seleccion2 = n.nextInt();
- 			switch (seleccion2){
- 				case 0:
- 				waste.showListProducts();
- 				break;
- 				case 1:
- 				System.out.println("indique el nombre del producto que desea agregar");
- 				name2 = s.nextLine();
- 				product = waste.addProductExist(name2);
- 				break;
- 				case 2:
- 				
- 			}
 
- 		}while(product == null);
+
  		
+ 		
+ 	}
+ 	//String identifier, String name, String description, Residue residue
+ 	public void addProduct(boolean conditional){
+ 		int aux;
+ 		Product product;
+ 		String identifier="",name="",description ="";
+ 		boolean continue1=false;
+ 		do{ 
+ 			System.out.println("indique un identificador para este producto: ");
+ 			identifier = s.nextLine();
+ 			continue1 = waste.searchIdentifiers(identifier);
+ 			if(continue1 == true){
+ 				System.out.println("este identificador esta en uso");
+ 			}
+ 			}while(continue1 == true);
+ 		do{
+ 			System.out.println("indique un nombre: ");
+ 			name = s.nextLine();
+ 			continue1 = waste.searchNamesProduct(name);
+ 			if(continue1 == true){
+ 				System.out.println("este nombre esta en uso");
+ 			}
+ 		}while(continue1 == true);
+ 		do{
+ 			System.out.println("indique una descripción del producto: ");
+ 			description = s.nextLine();
+ 		}while(description == "");
+ 		waste.addProduct(identifier,name,description);		
+ 		if(conditional == true){
+ 			System.out.println("a continuacion porfavor indique el o los residuos que este genera: ");
+ 			do{	
+ 				addResidue(false);
+ 				System.out.println("desea guardor otro? \n"+"1. Si\n"+"2. No");
+ 				aux = n.nextInt();
+ 			}while(aux == 1);
+ 		}
 
  	}
  }	

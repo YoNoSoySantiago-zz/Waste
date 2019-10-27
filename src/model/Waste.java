@@ -43,8 +43,8 @@ public class Waste{
 			System.out.println("este residuo no existe");
 		}
 	}
-	public void addProduct(String identifier, String name, String description, Residue residue){
-		Product product = new Product(identifier,name,description,residue);
+	public void addProduct(String identifier, String name, String description){
+		Product product = new Product(identifier,name,description);
 		products.add(product);
 	}
 
@@ -121,8 +121,10 @@ public class Waste{
 		return result;
 		
 	}
-	public boolean calculateBioUsable(String name){
+	public boolean calculateResidueUsable(String name){
 		int aux= -1,timeToDescompose;
+		String description1="",description2="";
+		Recyclable recycable;
 		Biodegradable biodegradable;
 		boolean composting, result = false;
 
@@ -143,39 +145,24 @@ public class Waste{
 				result = true;
 					}
 				}
+
+			}else if(residues.get(aux) instanceof Recyclable){
+				recycable = (Recyclable) residues.get(aux);
+				description1 = recycable.getDescriptionHome();
+				description2 = recycable.getDescriptionIndustry();
+				if(description1 != "" && description2 != ""){
+				result = true;
+				}
 			}
 		}
 		
 		return result;
 	}
-	public boolean calculateRecycleUsable(String name){
-		Recyclable recycable;
-		boolean result = false;
-		int aux =-1;
-		String description1= "",description2="";
-		for(int i=0; i<residues.size();i++){
-			if(residues.get(i).getName().equalsIgnoreCase(name)){
-				aux = i;
-				break;
-			}
-		}
-		if(aux != -1){
-			recycable = (Recyclable) residues.get(aux);
-			description1 = recycable.getDescriptionHome();
-			description2 = recycable.getDescriptionIndustry();
-			if(description1 != "" && description2 != ""){
-			result = true;
-			}
-
-		}
-		
-		return result;
-
-	}
+	
 	public void generateReport(){
-
+		int aux = 1;
 		for(int i=0; i<residues.size();i++){
-			int aux = 1;
+			
 			if(residues.get(i) instanceof Recyclable){
 				if(aux == 1){
 					System.out.println(residues.get(i).tipoClase().toUpperCase());
@@ -186,8 +173,9 @@ public class Waste{
 			aux++;
 			}
 		}
+		aux = 1;
 		for(int i=0; i<residues.size();i++){
-			int aux = 1;
+
 			if(residues.get(i) instanceof Biodegradable){
 				if(aux == 1){
 					System.out.println(residues.get(i).tipoClase().toUpperCase());
@@ -198,8 +186,9 @@ public class Waste{
 			aux++;
 			}
 		}
+		aux = 1;
 		for(int i=0; i<residues.size();i++){
-			int aux = 1;
+			
 			if(residues.get(i) instanceof Inert){
 				if(aux == 1){
 					System.out.println(residues.get(i).tipoClase().toUpperCase());
@@ -214,32 +203,41 @@ public class Waste{
  
 	}
 	public void showListResidueNosive(String product){
+		double nocive = 0;
 		ArrayList<String> max = new ArrayList<String>();
 		ArrayList<Double> position = new ArrayList<Double>();
-		for(int i = 0; i<products.size(); i++){
-			if(products.get(i).getName().equalsIgnoreCase(product) || products.get(i).getIdentifier().equalsIgnoreCase(product)){
-				ArrayList<Residue> residues = products.get(i).getResidues();
-				
-				i =  products.size();
+		ArrayList<Residue> residues2= new ArrayList<Residue>();
+		for(int i = 0; i<residues.size(); i++){
+			if(residues.get(i).getProductToProduce() != null){
+				if(residues.get(i).getProductToProduce().getName().equalsIgnoreCase(product) || residues.get(i).getProductToProduce().getIdentifier().equalsIgnoreCase(product)){
+				 
+					residues2.add(residues.get(i));
+				}
 			}
+			
 		}
-		if(!residues.isEmpty()){
-		for(int i=0;i<residues.size();i++) {
-			max.add(residues.get(i).getName());
-			position.add(calculateEfectPlanet(residues.get(i).getName()));
+		if(!residues2.isEmpty()){
+		for(int i=0;i<residues2.size();i++) {
+			max.add(residues2.get(i).getName());
+			nocive = calculateEfectPlanet(residues2.get(i).getName());
+			position.add(nocive);
 		}
 		for (int i = 0; i < position.size(); i++) {
-        for (int j = 0; j < position.size()-i-1; j++) {
-            if(position.get(j) < position.get(j+1)){
-                double aux = position.get(j+1);
-                position.add(j+1,position.get(j));
-                position.add(j,aux);
-                String auxS = max.get(j+1);
-                max.add(j+1, max.get(j));
-                max.add(j, auxS);
-            }
+        	for (int j = 0; j < position.size()-i-1; j++) {
+            	if(position.get(j) < position.get(j+1)){
+                	double aux = position.get(j+1);
+                	position.add(j+1,position.get(j));
+                	position.add(j,aux);
+                	String auxS = max.get(j+1);
+                	max.add(j+1, max.get(j));
+                	max.add(j, auxS);
+            	}
+        	}
+        
         }
-    }
+        for(int i = 0;i<max.size();i++){
+        	System.out.println(max.get(i));
+    	}
 
 
 		}	
@@ -247,13 +245,13 @@ public class Waste{
 	public boolean searchIdentifiers(String identifier){
 		boolean result = false;
 		    for(int i = 0; i<products.size();i++){
-		    	if(products.get(i).getIdentifier() == identifier){
+		    	if(products.get(i).getIdentifier().equalsIgnoreCase(identifier)){
 		    		result = true;
 		    		break;
 		    	}
 		    }
 		    for(int i =0;i<residues.size();i++){
-		    	if(residues.get(i).getIdentifier() == identifier){
+		    	if(residues.get(i).getIdentifier().equalsIgnoreCase(identifier)){
 		    		result = true;
 		    		break;
 		    	}
@@ -263,7 +261,17 @@ public class Waste{
     public boolean searchNames(String name){
 		boolean result = false;
 		    for(int i =0;i<residues.size();i++){
-		    	if(residues.get(i).getName() == name){
+		    	if(residues.get(i).getName().equalsIgnoreCase(name)){
+		    		result = true;
+		    		break;
+		    	}
+		    }
+		    return result;	
+    }
+    public boolean searchNamesProduct(String name){
+		boolean result = false;
+		    for(int i =0;i<products.size();i++){
+		    	if(products.get(i).getName().equalsIgnoreCase(name)){
 		    		result = true;
 		    		break;
 		    	}
@@ -280,6 +288,15 @@ public class Waste{
     	}
     	return result;
     }
+    public Product getLastProduct(){
+    	int aux = products.size()-1;
+    	System.out.println(products.get(aux).getIdentifier());
+    	return this.products.get(aux);
+    }
+    
+   
+  
+
 
 
 	

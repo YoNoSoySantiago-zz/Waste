@@ -29,16 +29,11 @@ public class Waste{
 		for(int i=0; i<residues.size();i++){
 			if(residues.get(i).getName().equalsIgnoreCase(name)){
 				aux = i;
-				i = residues.size();
+				break;
 			}
 		}
 		if(aux != -1){
-			System.out.println("identificador: "+residues.get(aux).getIdentifier());
-			System.out.println("name: "+residues.get(aux).getName());
-			System.out.println("origin: "+residues.get(aux).getOrigin());
-			System.out.println("color: "+residues.get(aux).getColor());
-			System.out.println("Tiempo de descomposición: "+residues.get(aux).getTimeToDescompose()+" dias");
-			System.out.println("producto que lo produce: "+residues.get(aux).getProductToProduce());
+			System.out.println(residues.get(aux).toString());
 		}else{
 			System.out.println("este residuo no existe");
 		}
@@ -49,12 +44,12 @@ public class Waste{
 	}
 
 	public void showInfoIdentifier(String identifier){
-		int aux=-1;
+		
 		String residue = "";
 		for(int i=0; i<residues.size();i++){
-			if(residues.get(i).getProductToProduce().getIdentifier().equalsIgnoreCase(identifier)){
+			if(residues.get(i).getIdentifier().equalsIgnoreCase(identifier)){
 				residue = residues.get(i).getName();
-				aux = residues.size();
+				break;
 			}
 		}
 		showInfoName(residue);
@@ -64,7 +59,7 @@ public class Waste{
 			System.out.println(products.get(i).getName());
 		}
 	}
-	public String showIdentifierProduct(String name){
+	/**public String showIdentifierProduct(String name){
 		String result="";
 		for(int i=0;i<products.size();i++){
 			if(products.get(i).getName().equalsIgnoreCase(name)){
@@ -74,7 +69,7 @@ public class Waste{
 		}
 		return result;
 	}
-
+	*/
 	public double calculateEfectPlanet(String residueName){
 		Residue residue;
 		Biodegradable biodegradable;

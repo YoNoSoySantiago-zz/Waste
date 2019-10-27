@@ -51,7 +51,7 @@ import java.util.ArrayList;
  			break;
 
  			case 4:
- 			System.out.println("1. nombre\n "+"2. identificador");
+ 			System.out.println("1. nombre\n"+"2. identificador");
  			seleccion2 = n.nextInt();
  			if(seleccion2 == 1){
  				System.out.println("indique el nombre del residuo que desea buscar: ");

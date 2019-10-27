@@ -48,5 +48,8 @@ public class Residue{
 	public void setProduct(Product product){
 		this.productToProduce = product;
 	}
+	public String toString() {
+		return "Identificador: "+identifier+"\nNombre: "+name+ "\nProcedencia: "+ origin+ "\nColor: "+color+"\nTiempo de descomposicion: "+timeToDescompose;
+	}
 
 }

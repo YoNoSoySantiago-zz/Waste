@@ -9,7 +9,9 @@ import java.util.ArrayList;
  	private boolean finish = false;
  	public static void main(String[] args){
  		Main main = new Main();
+ 		main.init();
  		do{
+
  			main.showMenu();
  			main.start();
 		}while(main.finish == false);
@@ -73,7 +75,7 @@ import java.util.ArrayList;
  			System.out.println("indique el nombre del residuo que desea Calcular: ");
  			name = s.nextLine();
  			nocive = waste.calculateEfectPlanet(name);
- 			System.out.println("el efecto Nocivo es: "+ nocive+"%");
+ 			System.out.println("el efecto Nocivo es: "+ nocive);
  			break;
 
  			case 7:
@@ -254,11 +256,7 @@ import java.util.ArrayList;
  			break;
 
 
- 		}
-
-
- 		
- 		
+ 		} 		
  	}
  	//String identifier, String name, String description, Residue residue
  	public void addProduct(boolean conditional){
@@ -296,6 +294,17 @@ import java.util.ArrayList;
  			}while(aux == 1);
  		}
 
+ 	}
+ 	public void init(){
+ 		Product product;
+ 		waste.addProduct("MU3BL3","Mueble","El mueble es un elemento funcional doméstico pensado y diseñado para favorecer la comodidad y facilidad del uso de los espacios al ser humano atendiendo a sus necesidades cotidianas");		
+ 		product = waste.getLastProduct();
+ 		waste.addResidue(true,"M4D3R4","Madera","domiciliario","cafe",730,product);
+ 		waste.addProduct("1MPR3N74","Imprenta","la imprenta es una maquina destinada a reproducir textos e imagenes sobre un papel.");
+ 		product = waste.getLastProduct();
+ 		waste.addResidue("evitar desecharlos y usarlos al maximo, por su largo tiempo de vida se le peuden dar muchas usos diferentes durante todoe ese tiempo","M374L","Metal","idustrial","plata",10950,product);
+ 		waste.addResidue("papel","Aprovechar ambos lados de la hoja al utilizar cuadernos o papel sucio.Promover la producción de papel reciclado casero","Usar más la pizarra y el proyector que hojas sueltas para impartir las lecciones.Facilitar el reciclaje colocando cestos o carpetas en salas y oficinas.","P4P3L","Papel","idustrial","blanco",365,product);
+ 		
  	}
  }	
 

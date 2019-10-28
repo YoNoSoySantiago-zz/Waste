@@ -78,7 +78,7 @@ public class Waste{
 	/**
 	*<p> desc: <p> receives a string of characters, this method allows you to calculate the harmful effect that a waste has on the planet, multiplying a factor determined by its origin and the time it takes to decompose, if it is corresponding waste it is recyclable 2% is subtracted from this value, if it is a biodegradable waste suitable for composting, 1% is subtracted.
 	*<p> pre: <p> the residue class, must already be created and installed as a reray ArrayList
-	*@param residueName, this parameter is a string of characters, which represents the name attribute of the waste class to search
+	*@param residueName this parameter is a string of characters, which represents the name attribute of the waste class to search
 	*@return this method returns a positive decimal number that represents the harmful effect of that residue on the planet
 	*/
 	public double calculateEfectPlanet(String residueName){
@@ -124,7 +124,7 @@ public class Waste{
 		}
 		}
 
-		return result*100;
+		return result;
 		
 	}
 	/**
@@ -133,7 +133,7 @@ public class Waste{
 	Decomposition is less than one year and is suitable for composting. For recyclable waste, it must be met that there is
 	The description of the proper way to dispose of waste.
 	*<p> pre: <p> the residue class, must already be created and installed as a reray ArrayList
-	*@param name, parameter is a string of characters, which represents the name attribute of the residual class to look for
+	*@param name parameter is a string of characters, which represents the name attribute of the residual class to look for
 	*@return this method returns a true value that indicates whether the residue is usable or not
 	*/
 	public boolean calculateResidueUsable(String name){
@@ -223,7 +223,7 @@ public class Waste{
 	/**
 	*<p> desc: <p> receives a string of characters, this method allows you to display on the screen a list of waste belonging to a product, from the most harmful to the least harmful
 	*<p> pre: <p> the residue class must already be created and installed as a reidue ArrayList, also the calculateEfectPlanet method must be working
-	*@param product, is a string of characters, this parameter represents the name of the product to which the list of waste generated will be displayed	
+	*@param product is a string of characters, this parameter represents the name of the product to which the list of waste generated will be displayed	
 	*/
 	public void showListResidueNosive(String product){
 		double nocive = 0;
@@ -290,7 +290,7 @@ public class Waste{
     /**
     *<p> desc: <p> receives a string of characters, this method allows to verify if a residue name already exists
     *<p> pre: <p> the residue class, must already be created and installed as a residue ArrayList
-    *@param name, parameter is a string of characters, which represents the name attribute of the residual class to look for
+    *@param name parameter is a string of characters, which represents the name attribute of the residual class to look for
     *@return this method returns a true value, which indicates whether a residue already exists with the same name or not
     */
     public boolean searchNames(String name){
@@ -306,7 +306,7 @@ public class Waste{
     /**
     *<p> desc: <p> receives a string of characters, this method allows to verify if a product name already exists
     *<p> pre: <p> the product class, must already be created and installed as an ArrayList of product
-	*@param name, parameter is a string of characters, which represents the name attribute of the product class to search
+	*@param name parameter is a string of characters, which represents the name attribute of the product class to search
 	*@return this method returns a true value, which indicates whether a product already exists with the same name or not
     */
     public boolean searchNamesProduct(String name){
@@ -322,7 +322,7 @@ public class Waste{
     /**
     *<p> desc: <p> receives a string of characters, this method allows you to search and deliver a product object based on its name attribute
     *<p> pre: <p> the product class, must already be created and installed as an ArrayList of product
-    *@param name, parameter is a string of characters, which represents the name attribute of the product class to search
+    *@param name parameter is a string of characters, which represents the name attribute of the product class to search
     *@return this method returns an object of type product, which is the product with the name equal to the parameter
     */
     public Product addProductExist(String name){

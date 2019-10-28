@@ -68,11 +68,12 @@ import java.util.ArrayList;
  			waste.showListProducts();
  			break;
 
+
  			case 6:
  			System.out.println("indique el nombre del residuo que desea Calcular: ");
  			name = s.nextLine();
  			nocive = waste.calculateEfectPlanet(name);
- 			System.out.println("el efecto Nocivo es: "+ nocive);
+ 			System.out.println("el efecto Nocivo es: "+ nocive+"%");
  			break;
 
  			case 7:
